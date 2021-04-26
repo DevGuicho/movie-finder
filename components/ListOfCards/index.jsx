@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from '../Card'
-import { Slider, ListOfCardsContainer } from './ui'
+import { Slider, ListOfCardsContainer, SliderItem } from './ui'
 
 const ListOfCards = ({ title, cards }) => {
   return (
@@ -8,14 +8,15 @@ const ListOfCards = ({ title, cards }) => {
       <h2>{title}</h2>
       <Slider>
         {cards.map((trend) => (
-          <Card
-            key={trend.id}
-            mediaType={trend.mediaType}
-            bgImage={trend.bgImage}
-            id={trend.id}
-            description={trend.description}
-            title={trend.title}
-          />
+          <SliderItem key={trend.id}>
+            <Card
+              mediaType={trend.mediaType}
+              bgImage={trend.bgImage}
+              id={trend.id}
+              description={trend.description}
+              title={trend.title}
+            />
+          </SliderItem>
         ))}
       </Slider>
     </ListOfCardsContainer>

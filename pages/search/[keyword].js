@@ -12,7 +12,8 @@ const SearchResultContainer = styled.main`
 
 const ResultadosGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, 200px);
+  justify-content: center;
   justify-items: center;
   gap: 20px;
 `
@@ -23,9 +24,9 @@ const SearchResult = ({ results }) => {
   return (
     <Layout>
       <SearchResultContainer>
-        <Search />
+        <Search search={keyword.replace(/-/g, ' ')} />
         <section>
-          <h2>Resultados para {keyword}</h2>
+          <h2>Resultados para {keyword.replace(/-/g, ' ')}</h2>
           <ResultadosGrid>
             {results.map((card) => (
               <Card
@@ -35,6 +36,7 @@ const SearchResult = ({ results }) => {
                 id={card.id}
                 description={card.description}
                 title={card.title}
+                isOnResults
               />
             ))}
           </ResultadosGrid>
