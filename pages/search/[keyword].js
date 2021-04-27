@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable multiline-ternary */
+import React, { useEffect, useState } from 'react'
 import Card from '../../components/Card'
 import Layout from '../../components/Layout'
 import Search from '../../components/Search'
@@ -18,38 +19,50 @@ const ResultadosGrid = styled.div`
   gap: 20px;
 `
 
-const SearchResult = ({ results }) => {
+const SearchResult = () => {
+  const [results, setResults] = useState([])
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
-  const { keyword } = router.query
+  const { keyword, filter } = router.query
+
+  useEffect(() => {
+    getSearch({ filter, keyword })
+      .then((res) => {
+        setIsLoading(false)
+        setResults(res.results)
+      })
+      .catch((error) => setError(error))
+  }, [])
+
+  if (error) return <h1>Ha habido un error</h1>
   return (
     <Layout>
       <SearchResultContainer>
         <Search search={keyword.replace(/-/g, ' ')} />
         <section>
           <h2>Resultados para {keyword.replace(/-/g, ' ')}</h2>
-          <ResultadosGrid>
-            {results.map((card) => (
-              <Card
-                key={card.id}
-                mediaType={card.mediaType}
-                bgImage={card.bgImage}
-                id={card.id}
-                description={card.description}
-                title={card.title}
-                isOnResults
-              />
-            ))}
-          </ResultadosGrid>
+          {isLoading ? (
+            <p>Is Loading</p>
+          ) : (
+            <ResultadosGrid>
+              {results.map((card) => (
+                <Card
+                  key={card.id}
+                  mediaType={card.mediaType}
+                  bgImage={card.bgImage}
+                  id={card.id}
+                  description={card.description}
+                  title={card.title}
+                  isOnResults
+                />
+              ))}
+            </ResultadosGrid>
+          )}
         </section>
       </SearchResultContainer>
     </Layout>
   )
-}
-
-export async function getServerSideProps({ query }) {
-  const { filter, keyword } = query
-  const { results } = await getSearch({ filter, keyword })
-  return { props: { results } }
 }
 
 export default SearchResult
