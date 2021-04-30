@@ -1,6 +1,12 @@
 import React, { useRef } from 'react'
 import Card from '../Card'
-import { Slider, ListOfCardsContainer, SliderItem, ButtonSlider } from './ui'
+import {
+  ButtonSlider,
+  Carousel,
+  CarouselContainer,
+  CarouselItem,
+  Section
+} from './ui'
 
 const ListOfCards = ({ title, cards, isFavorite }) => {
   const myRef = useRef(null)
@@ -16,7 +22,7 @@ const ListOfCards = ({ title, cards, isFavorite }) => {
     myRef.current.scrollLeft = myRef.current.scrollLeft - 500
   }
   return (
-    <ListOfCardsContainer>
+    <Section>
       <h2>{title}</h2>
       <ButtonSlider onClick={handleLeft}>
         <i></i>
@@ -24,21 +30,23 @@ const ListOfCards = ({ title, cards, isFavorite }) => {
       <ButtonSlider right onClick={handleRight}>
         <i></i>
       </ButtonSlider>
-      <Slider ref={myRef}>
-        {cards.map((trend) => (
-          <SliderItem key={trend.id}>
-            <Card
-              mediaType={trend.mediaType}
-              bgImage={trend.bgImage}
-              id={trend.id}
-              description={trend.description}
-              title={trend.title}
-              isFavorite={isFavorite}
-            />
-          </SliderItem>
-        ))}
-      </Slider>
-    </ListOfCardsContainer>
+      <Carousel ref={myRef}>
+        <CarouselContainer>
+          {cards.map((trend) => (
+            <CarouselItem className='carousel-item' key={trend.id}>
+              <Card
+                mediaType={trend.mediaType}
+                bgImage={trend.bgImage}
+                id={trend.id}
+                description={trend.description}
+                title={trend.title}
+                isFavorite={isFavorite}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContainer>
+      </Carousel>
+    </Section>
   )
 }
 

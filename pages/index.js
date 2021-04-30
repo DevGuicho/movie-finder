@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import ListOfCards from '../components/ListOfCards'
 import Layout from '../components/Layout'
-import { getTrends } from '../services/getTrends'
 import styled from '@emotion/styled'
 import Search from '../components/Search'
 import ContextFavorite from '../context/contextFavorite'
+import getCoversService from '../services/getCoversService'
 
 const HomeContainer = styled.main`
   max-width: 100%;
@@ -20,41 +20,20 @@ const Home = ({ trends }) => {
         {favorites.length > 0 && (
           <ListOfCards title='My List' cards={favorites} />
         )}
-        {trends.map((trend, index) => (
-          <ListOfCards
-            key={index}
-            title={`Trendings ${trend.title}`}
-            cards={trend.cards}
-          />
-        ))}
+
+        <ListOfCards title='Trendigs' cards={trends.allTrends} />
+        <ListOfCards title='Trendigs Movies' cards={trends.movieTrends} />
+        <ListOfCards title='Trendigs Series' cards={trends.tvTrends} />
+        <ListOfCards title='Trendigs People' cards={trends.peopleTrends} />
       </HomeContainer>
     </Layout>
   )
 }
 
-export async function getServerSideProps(ctx) {
-  const trends = [
-    getTrends({ category: 'all' }),
-    getTrends({ category: 'movie' }),
-    getTrends({ category: 'tv' }),
-    getTrends({ category: 'person' })
-  ]
-  const [
-    allTrends,
-    moviesTrends,
-    seriesTrends,
-    peopleTrends
-  ] = await Promise.all(trends)
-
+export async function getServerSideProps() {
+  const trends = await getCoversService()
   return {
-    props: {
-      trends: [
-        { title: '', cards: allTrends.data },
-        { title: 'Movies', cards: moviesTrends.data },
-        { title: 'Series', cards: seriesTrends.data },
-        { title: 'People', cards: peopleTrends.data }
-      ]
-    }
+    props: { trends }
   }
 }
 

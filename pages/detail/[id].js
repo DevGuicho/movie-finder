@@ -2,23 +2,31 @@
 import React from 'react'
 
 import Layout from '../../components/Layout'
-import { useRouter } from 'next/router'
 import MovieDetail from '../../components/MovieDetail'
 import PersonDetail from '../../components/PersonDetail'
+import getDetails from '../../services/getDetails'
 
-const Keyoword1 = () => {
-  const router = useRouter()
-  const { id, mediaType } = router.query
+const Keyoword1 = ({ results }) => {
+  const { id, mediaType } = results
   const intId = parseInt(id)
   return (
     <Layout isDetail={mediaType !== 'person'}>
       {mediaType === 'person' ? (
-        <PersonDetail id={intId} />
+        <PersonDetail id={intId} info={results} />
       ) : (
-        <MovieDetail id={intId} mediaType={mediaType} />
+        <MovieDetail id={intId} info={results} />
       )}
     </Layout>
   )
+}
+
+export async function getServerSideProps({ query }) {
+  const { id, mediaType } = query
+  const results = await getDetails({ id, mediaType })
+
+  return {
+    props: { results }
+  }
 }
 
 export default Keyoword1
