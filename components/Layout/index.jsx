@@ -14,7 +14,7 @@ const LayoutContainer = styled.div`
   background-color: #1a508b;
 `
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isDetail }) => {
   return (
     <>
       <Head>
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
         />
       </Head>
       <LayoutContainer>
-        <Header />
+        <Header isDetail={isDetail} />
         {children}
         <Footer />
       </LayoutContainer>

@@ -23,8 +23,9 @@ const SearchResult = () => {
   const [results, setResults] = useState([])
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+
   const router = useRouter()
-  const { keyword, filter } = router.query
+  const { keyword = '', filter } = router.query
 
   useEffect(() => {
     getSearch({ filter, keyword })
@@ -41,23 +42,29 @@ const SearchResult = () => {
       <SearchResultContainer>
         <Search search={keyword.replace(/-/g, ' ')} />
         <section>
-          <h2>Resultados para {keyword.replace(/-/g, ' ')}</h2>
-          {isLoading ? (
-            <p>Is Loading</p>
+          {results.length === 0 ? (
+            <h2>No hay resultados para esta busqueda</h2>
           ) : (
-            <ResultadosGrid>
-              {results.map((card) => (
-                <Card
-                  key={card.id}
-                  mediaType={card.mediaType}
-                  bgImage={card.bgImage}
-                  id={card.id}
-                  description={card.description}
-                  title={card.title}
-                  isOnResults
-                />
-              ))}
-            </ResultadosGrid>
+            <>
+              <h2>Resultados para {keyword.replace(/-/g, ' ')}</h2>
+              {isLoading ? (
+                <p>Is Loading</p>
+              ) : (
+                <ResultadosGrid>
+                  {results.map((card) => (
+                    <Card
+                      key={card.id}
+                      mediaType={card.mediaType}
+                      bgImage={card.bgImage}
+                      id={card.id}
+                      description={card.description}
+                      title={card.title}
+                      isOnResults
+                    />
+                  ))}
+                </ResultadosGrid>
+              )}
+            </>
           )}
         </section>
       </SearchResultContainer>

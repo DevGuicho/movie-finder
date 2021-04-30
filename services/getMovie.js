@@ -8,7 +8,8 @@ const getMovie = async ({ id, mediaType }) => {
   const data = await res.json()
 
   const generalInfo = {
-    bgImage: data.backdrop_path,
+    heroImage: data.backdrop_path,
+    bgImage: data.poster_path,
     genres: data.genres,
     homepage: data.homepage,
     id: data.id,
@@ -21,14 +22,12 @@ const getMovie = async ({ id, mediaType }) => {
       ? {
           ...generalInfo,
           title: data.original_title,
-          posterImage: data.poster_path,
           releaseDate: data.release_date,
           duration: data.runtime
         }
       : {
           ...generalInfo,
           title: data.original_name,
-          posterImage: data.poster_path,
           seasons: data.seasons,
           type: data.type
         }

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ListOfCards from '../components/ListOfCards'
 import Layout from '../components/Layout'
 import { getTrends } from '../services/getTrends'
 import styled from '@emotion/styled'
 import Search from '../components/Search'
+import ContextFavorite from '../context/contextFavorite'
 
 const HomeContainer = styled.main`
   max-width: 100%;
@@ -11,10 +12,14 @@ const HomeContainer = styled.main`
 `
 
 const Home = ({ trends }) => {
+  const { favorites } = useContext(ContextFavorite)
   return (
     <Layout>
       <HomeContainer>
         <Search />
+        {favorites.length > 0 && (
+          <ListOfCards title='My List' cards={favorites} />
+        )}
         {trends.map((trend, index) => (
           <ListOfCards
             key={index}

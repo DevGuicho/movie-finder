@@ -1,9 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { CardUI, CardBody, LikeBtn, DetailBtn } from './ui'
+import { CardUI, CardBody, DetailBtn } from './ui'
+import useFavorites from '../../hooks/useFavorites'
+import FavoriteButton from '../FavoriteButton'
 
 const Card = ({ description, title, bgImage, id, mediaType, isOnResults }) => {
+  const { isFavorite, deleteFavorite, addFavorite } = useFavorites({ id })
+
   const router = useRouter()
   const imgUrl = bgImage
     ? `https://image.tmdb.org/t/p/original/${bgImage}`
@@ -12,6 +16,14 @@ const Card = ({ description, title, bgImage, id, mediaType, isOnResults }) => {
     router.push(`/detail/${id}?mediaType=${mediaType}`)
   }
 
+  const handleLike = () => {
+    if (isFavorite) {
+      return deleteFavorite({ id })
+    }
+    addFavorite({
+      favorite: { description, title, bgImage, id, mediaType }
+    })
+  }
   return (
     <CardUI className='card'>
       <Image
@@ -24,9 +36,7 @@ const Card = ({ description, title, bgImage, id, mediaType, isOnResults }) => {
       <CardBody className='cardFooter' isOnResults={isOnResults}>
         <h5>{title}</h5>
         <div className='infoCard'>
-          <LikeBtn>
-            <i></i>
-          </LikeBtn>
+          <FavoriteButton isFavorite={isFavorite} handleClick={handleLike} />
           <DetailBtn onClick={handleDetail}>
             <i></i>
           </DetailBtn>

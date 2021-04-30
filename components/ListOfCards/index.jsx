@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import Card from '../Card'
 import { Slider, ListOfCardsContainer, SliderItem, ButtonSlider } from './ui'
 
-const ListOfCards = ({ title, cards }) => {
+const ListOfCards = ({ title, cards, isFavorite }) => {
   const myRef = useRef(null)
 
   const handleRight = () => {
@@ -33,6 +33,7 @@ const ListOfCards = ({ title, cards }) => {
               id={trend.id}
               description={trend.description}
               title={trend.title}
+              isFavorite={isFavorite}
             />
           </SliderItem>
         ))}

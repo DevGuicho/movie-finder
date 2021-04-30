@@ -67,4 +67,9 @@ export const LikeBtn = styled.button`
     font-family: 'solid icon';
     color: white;
   }
+  ${(props) =>
+    props.isFavorite &&
+    css`
+      background-color: #dc3545;
+    `}
 `
