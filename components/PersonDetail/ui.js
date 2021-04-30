@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 export const Detail = styled.main`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   place-items: center;
   grid-gap: 20px;
   width: 95%;
@@ -11,9 +11,6 @@ export const Detail = styled.main`
   padding: 20px 0;
 
   margin: 0 auto;
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
 `
 export const ImageContainer = styled.div`
   max-width: 300px;

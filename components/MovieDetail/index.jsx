@@ -61,25 +61,26 @@ const MovieDetail = ({ id, mediaType }) => {
     releaseDate: ''
   })
 
-  const intId = parseInt(id)
   const { title, description, heroImage, bgImage } = movie
   const { isFavorite, deleteFavorite, addFavorite } = useFavorites({
-    id: parseInt(id)
+    id
   })
 
   useEffect(() => {
-    getMovie({ id: intId, mediaType }).then((movie) => {
-      setMovie({ ...movie })
-      console.log(movie)
-    })
-  }, [])
+    if (id) {
+      getMovie({ id, mediaType }).then((movie) => {
+        setMovie({ ...movie })
+        console.log(movie)
+      })
+    }
+  }, [id])
 
   const handleLike = () => {
     if (isFavorite) {
-      return deleteFavorite({ id: intId })
+      return deleteFavorite({ id })
     }
     addFavorite({
-      favorite: { description, title, bgImage, id: intId, mediaType }
+      favorite: { description, title, bgImage, id, mediaType }
     })
   }
   return (

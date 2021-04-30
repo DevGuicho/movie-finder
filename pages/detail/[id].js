@@ -11,7 +11,7 @@ const Keyoword1 = () => {
   const { id, mediaType } = router.query
   const intId = parseInt(id)
   return (
-    <Layout isDetail>
+    <Layout isDetail={mediaType !== 'person'}>
       {mediaType === 'person' ? (
         <PersonDetail id={intId} />
       ) : (

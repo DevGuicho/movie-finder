@@ -34,7 +34,7 @@ const SearchResult = () => {
         setResults(res.results)
       })
       .catch((error) => setError(error))
-  }, [])
+  }, [results])
 
   if (error) return <h1>Ha habido un error</h1>
   return (

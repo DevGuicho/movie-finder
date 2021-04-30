@@ -13,8 +13,10 @@ const PersonDetail = ({ id }) => {
     biography: ''
   })
   useEffect(() => {
-    getPerson({ id }).then((person) => setPerson(person))
-  }, [])
+    if (id) {
+      getPerson({ id }).then((person) => setPerson(person))
+    }
+  }, [id])
   return (
     <Detail>
       <ImageContainer>
