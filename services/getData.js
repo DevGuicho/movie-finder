@@ -4,7 +4,6 @@ const getData = ({ mediaType, res }) => {
       return {
         bgImage: res.poster_path,
         id: res.id,
-        description: res.overview,
         title: res.original_title,
         mediaType
       }
@@ -13,7 +12,6 @@ const getData = ({ mediaType, res }) => {
       return {
         bgImage: res.poster_path,
         id: res.id,
-        description: res.overview,
         title: res.name,
         mediaType
       }
@@ -22,7 +20,6 @@ const getData = ({ mediaType, res }) => {
       return {
         bgImage: res.profile_path,
         id: res.id,
-        description: res.name,
         title: res.name,
         mediaType
       }

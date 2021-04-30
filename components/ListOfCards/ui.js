@@ -1,46 +1,70 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
-export const Slider = styled.div`
-  display: flex;
+export const Section = styled.section`
   width: 100%;
-  padding: 40px 0;
-  overflow-x: auto;
-  gap: 20px;
-  z-index: 1;
+  position: relative;
+  h2 {
+    width: 95%;
+    margin: 0 auto;
+    color: var(--yellow);
+  }
+`
+
+export const Carousel = styled.section`
+  position: relative;
+  overflow: scroll;
+  width: 95%;
+  margin: 0 auto;
   &::-webkit-scrollbar {
     display: none;
   }
   scroll-behavior: smooth;
 `
-export const SliderItem = styled.div`
-  transition: 450ms all;
+export const CarouselContainer = styled.div`
+  transition: 450ms -webkit-transform;
+  transition: 450ms transform;
+  transition: 450ms transform, 450ms -webkit-transform;
+  font-size: 0;
+  white-space: nowrap;
+  margin: 70px 0px;
+  padding-bottom: 10px;
 
-  &:hover .cardFooter {
-    display: flex;
+  &:hover .carousel-item {
+    opacity: 0.3;
   }
-  &:hover .card {
-    transform: scale(1.2, 1.2) translate(20px);
-  }
-  &:hover {
-    margin-right: 40px;
+  &:hover .carousel-item:hover {
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+    opacity: 1;
   }
 `
-export const ListOfCardsContainer = styled.section`
+
+export const CarouselItem = styled.div`
+  border-radius: 20px;
+  overflow: hidden;
   position: relative;
-  max-width: 95%;
-  margin: 20px auto;
-  h2 {
-    color: var(--yellow);
+  display: inline-block;
+  width: 200px;
+  height: 250px;
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 450ms all;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+  &:hover ~ .carousel-item {
+    -webkit-transform: translate3d(100px, 0, 0);
+    transform: translate3d(100px, 0, 0);
   }
 `
 
 export const ButtonSlider = styled.button`
   opacity: 0;
   position: absolute;
-  top: 17%;
+  top: 125px;
   z-index: 2;
-  height: 300px;
+  height: 200px;
   width: 50px;
   border: none;
   background-color: rgba(0, 0, 0, 0.5);
@@ -50,10 +74,10 @@ export const ButtonSlider = styled.button`
   ${(props) =>
     props.right
       ? css`
-          right: 0;
+          right: 20px;
         `
       : css`
-          left: 0;
+          left: 20px;
         `};
 
   i {

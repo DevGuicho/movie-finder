@@ -6,13 +6,14 @@ export const CardUI = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-width: 200px;
-  max-width: 300px;
-  min-height: 300px;
+  height: 100%;
   width: 100%;
   transition: 450ms transform;
   img {
     z-index: 1;
+  }
+  &:hover .cardFooter {
+    display: flex;
   }
 `
 
@@ -23,11 +24,12 @@ export const CardBody = styled.div`
   justify-content: space-between;
   z-index: 2;
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   h5 {
-    font-size: 14px;
+    width: 100%;
+    font-size: 12px;
     margin-bottom: 12px;
   }
   .infoCard {
@@ -37,6 +39,7 @@ export const CardBody = styled.div`
   @media (hover: none) {
     display: flex;
   }
+
   ${(props) =>
     props.isOnResults &&
     css`

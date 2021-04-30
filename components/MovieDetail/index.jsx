@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import styled from '@emotion/styled'
-import getMovie from '../../services/getMovie'
 import useFavorites from '../../hooks/useFavorites'
 import FavoriteButton from '../FavoriteButton'
 
@@ -49,31 +48,11 @@ const InfoContainer = styled.section`
   }
 `
 
-const MovieDetail = ({ id, mediaType }) => {
-  const [movie, setMovie] = useState({
-    title: '',
-    bgImage: '',
-    description: '',
-    posterImage: '',
-    heroImage: '',
-    duration: null,
-    genres: [],
-    releaseDate: ''
-  })
-
-  const { title, description, heroImage, bgImage } = movie
+const MovieDetail = ({ id, info }) => {
+  const { title, description, heroImage, bgImage, mediaType } = info
   const { isFavorite, deleteFavorite, addFavorite } = useFavorites({
     id
   })
-
-  useEffect(() => {
-    if (id) {
-      getMovie({ id, mediaType }).then((movie) => {
-        setMovie({ ...movie })
-        console.log(movie)
-      })
-    }
-  }, [id])
 
   const handleLike = () => {
     if (isFavorite) {
@@ -97,8 +76,8 @@ const MovieDetail = ({ id, mediaType }) => {
       <InfoContainer>
         <div className='wrap'>
           <h2>{title}</h2>
-          <span>{movie.duration} mins</span>
-          {movie.genres.map((gen, index) => (
+          <span>{info.duration} mins</span>
+          {info.genres.map((gen, index) => (
             <span key={index}> {gen.name} </span>
           ))}
           <p>{description}</p>
